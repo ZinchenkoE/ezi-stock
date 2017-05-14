@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 
 $g = !empty($_GET) ? '_GET: '.json_encode($_GET).";\n" : '';
-$p = isset($_POST['data']) ? '_POST: '.$_POST['data'].";\n" : '';
+$p = isset($_POST['data']) ? $_POST['data'].";\n" : '';
 
 
 file_put_contents(

